@@ -6,6 +6,6 @@ package org.euvsvirus.cac.model;
  **/
 public enum Level {
 
-    GOLD,SILVER,BRONCE
+    GOLD, SILVER, BRONCE
 
 }
