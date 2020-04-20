@@ -6,6 +6,8 @@ package org.euvsvirus.cac.model;
  **/
 public class Skill {
 
-    private String skillName;
+    private String uid;
+
+    private String name;
 
 }
