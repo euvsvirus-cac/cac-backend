@@ -8,7 +8,7 @@ import java.util.Map;
  **/
 public class User {
 
-    private String uid;
+    private String id;
 
     private String firstName;
 
