@@ -1,0 +1,1 @@
+INSERT INTO "user" VALUES (1, 'Ramesh', 'Ahmedabad', 'nk@abc.de', '$2y$12$QSsSSMRDGtBIJOZL0f7ZHuSCZXP./giQu4lYJv1gTkckiUiAHWQl.');
