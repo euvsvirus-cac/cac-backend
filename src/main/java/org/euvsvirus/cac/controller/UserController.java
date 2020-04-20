@@ -1,6 +1,6 @@
 package org.euvsvirus.cac.controller;
 
-import org.euvsvirus.cac.model.Login;
+import org.euvsvirus.cac.model.LoginRequest;
 import org.euvsvirus.cac.model.User;
 import org.euvsvirus.cac.response.JWTTokenResponse;
 import org.euvsvirus.cac.service.CacUserLoginService;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class UserController {
 
-    CacUserLoginService cacUserLoginService;
+    private final CacUserLoginService cacUserLoginService;
 
     public UserController(CacUserLoginService cacUserLoginService) {
         this.cacUserLoginService = cacUserLoginService;
@@ -31,8 +31,8 @@ public class UserController {
     }
 
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<JWTTokenResponse> login(@RequestBody Login login) {
+    public ResponseEntity<JWTTokenResponse> login(@RequestBody LoginRequest login) {
 
-        return new ResponseEntity<>(cacUserLoginService.generateJWTToken(login.getEmail(), login.getPassword()), HttpStatus.OK);
+        return new ResponseEntity<>(cacUserLoginService.login(login.getEmail(), login.getPassword()), HttpStatus.OK);
     }
 }

@@ -3,10 +3,10 @@ package org.euvsvirus.cac.service;
 import org.euvsvirus.cac.model.User;
 import org.euvsvirus.cac.repository.UserRepository;
 import org.euvsvirus.cac.response.JWTTokenResponse;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import javax.persistence.EntityNotFoundException;
 
 /**
  * @author Nils Knudsen
@@ -15,10 +15,9 @@ import javax.persistence.EntityNotFoundException;
 @Service
 public class CacUserLoginService {
 
-
-    private UserRepository accountRepository;
-    private JwtTokenService jwtTokenService;
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository accountRepository;
+    private final JwtTokenService jwtTokenService;
+    private final PasswordEncoder passwordEncoder;
 
     public CacUserLoginService(UserRepository accountRepository, JwtTokenService jwtTokenService, PasswordEncoder passwordEncoder) {
         this.accountRepository = accountRepository;
@@ -26,12 +25,16 @@ public class CacUserLoginService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public JWTTokenResponse generateJWTToken(String email, String password) {
+    public JWTTokenResponse login(String email, String password) {
         User user = accountRepository.findByEmail(email);
-        if(passwordEncoder.matches(password, user.getPassword())) {
+        if (user == null) {
+            throw new UsernameNotFoundException("User does not exist.");
+        }
+
+        if (passwordEncoder.matches(password, user.getPassword())) {
             return new JWTTokenResponse(jwtTokenService.generateToken(email));
         } else {
-            throw new EntityNotFoundException("Account not found");
+            throw new BadCredentialsException("Wrong.");
         }
     }
 

@@ -4,7 +4,7 @@ package org.euvsvirus.cac.model;
  * @author Nils Knudsen
  * @since 20.04.20
  **/
-public class Login {
+public class LoginRequest {
 
     String email;
 
