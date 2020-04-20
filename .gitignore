@@ -1,3 +1,6 @@
+# H2 databases
+*.db
+
 target/
 
 ### STS ###
