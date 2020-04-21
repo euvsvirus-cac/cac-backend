@@ -1,4 +1,4 @@
-package org.euvsvirus.cac.response;
+package org.euvsvirus.cac.model.response;
 
 public class JWTTokenResponse {
     private String token;

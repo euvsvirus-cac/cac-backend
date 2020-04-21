@@ -1,14 +1,19 @@
 package org.euvsvirus.cac.controller;
 
-import org.euvsvirus.cac.model.LoginRequest;
+import org.euvsvirus.cac.model.request.LoginRequest;
 import org.euvsvirus.cac.model.User;
-import org.euvsvirus.cac.response.JWTTokenResponse;
+import org.euvsvirus.cac.model.response.JWTTokenResponse;
 import org.euvsvirus.cac.service.CacUserLoginService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController

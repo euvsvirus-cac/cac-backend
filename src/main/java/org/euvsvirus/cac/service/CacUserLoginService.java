@@ -2,7 +2,7 @@ package org.euvsvirus.cac.service;
 
 import org.euvsvirus.cac.model.User;
 import org.euvsvirus.cac.repository.UserRepository;
-import org.euvsvirus.cac.response.JWTTokenResponse;
+import org.euvsvirus.cac.model.response.JWTTokenResponse;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;

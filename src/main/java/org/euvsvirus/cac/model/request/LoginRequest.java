@@ -1,4 +1,4 @@
-package org.euvsvirus.cac.model;
+package org.euvsvirus.cac.model.request;
 
 /**
  * @author Nils Knudsen
