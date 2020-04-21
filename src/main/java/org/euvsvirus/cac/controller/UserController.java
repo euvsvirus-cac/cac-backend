@@ -1,11 +1,14 @@
 package org.euvsvirus.cac.controller;
 
+import org.euvsvirus.cac.model.JwtToken;
 import org.euvsvirus.cac.model.User;
 import org.euvsvirus.cac.model.request.CreateUserRequest;
 import org.euvsvirus.cac.model.request.LoginRequest;
 import org.euvsvirus.cac.model.response.JWTTokenResponse;
 import org.euvsvirus.cac.service.CacUserService;
 import org.euvsvirus.cac.service.JwtTokenService;
+import org.euvsvirus.cac.service.CacUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,6 +30,9 @@ public class UserController {
     private final JwtTokenService jwtTokenService;
 
     private final CacUserService cacUserService;
+
+    @Autowired
+    private CacUserDetailsService cacUserDetailsService;
 
     public UserController(AuthenticationManager authenticationManager, JwtTokenService jwtTokenService, CacUserService cacUserService) {
         this.authenticationManager = authenticationManager;
