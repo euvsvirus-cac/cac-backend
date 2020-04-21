@@ -32,7 +32,7 @@ public class User implements UserDetails {
     private Set<UserTeam> teams;
 
     public User() {
-        this.id = UUID.randomUUID().toString();
+            this.id = UUID.randomUUID().toString();
     }
 
     public Set<UserTeam> getTeams() {
