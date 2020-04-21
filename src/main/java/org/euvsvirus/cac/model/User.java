@@ -29,7 +29,7 @@ public class User implements UserDetails {
     private Set<UserSkill> skills;
 
     public User() {
-        this.id = UUID.randomUUID().toString();
+            this.id = UUID.randomUUID().toString();
     }
 
     public String getId() {
