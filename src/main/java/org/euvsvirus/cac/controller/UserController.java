@@ -1,12 +1,12 @@
 package org.euvsvirus.cac.controller;
 
-import org.euvsvirus.cac.model.JwtToken;
 import org.euvsvirus.cac.model.User;
+import org.euvsvirus.cac.model.request.CreateUserRequest;
 import org.euvsvirus.cac.model.request.LoginRequest;
 import org.euvsvirus.cac.model.response.JWTTokenResponse;
 import org.euvsvirus.cac.service.CacUserDetailsService;
-import org.euvsvirus.cac.service.CacUserLoginService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.euvsvirus.cac.service.CacUserService;
+import org.euvsvirus.cac.service.JwtTokenService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,20 +22,19 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class UserController {
 
-    private final CacUserLoginService cacUserLoginService;
+    private final CacUserDetailsService cacUserDetailsService;
 
-    @Autowired
-    private CacUserDetailsService cacUserDetailsService;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final JwtTokenService jwtTokenService;
 
-    @Autowired
-    private JwtToken jwtToken;
+    private final CacUserService cacUserService;
 
-
-    public UserController(CacUserLoginService cacUserLoginService) {
-        this.cacUserLoginService = cacUserLoginService;
+    public UserController(CacUserDetailsService cacUserDetailsService, AuthenticationManager authenticationManager, JwtTokenService jwtTokenService, CacUserService cacUserService) {
+        this.authenticationManager = authenticationManager;
+        this.jwtTokenService = jwtTokenService;
+        this.cacUserDetailsService = cacUserDetailsService;
+        this.cacUserService = cacUserService;
     }
 
     @GetMapping(value = "/me", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -49,32 +48,26 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginRequest loginRequest) throws Exception {
-
-
         authenticate(loginRequest.getEmail(), loginRequest.getPassword());
-
         final UserDetails userDetails = cacUserDetailsService.loadUserByUsername(loginRequest.getEmail());
-
-        final String token = jwtToken.generateToken(userDetails);
-
+        final String token = jwtTokenService.generateToken(userDetails);
         return ResponseEntity.ok(new JWTTokenResponse(token));
-
     }
+
+    @PostMapping("/user")
+    public ResponseEntity create(@RequestBody CreateUserRequest createUserRequest) {
+        return ResponseEntity.ok(cacUserService.createUser(createUserRequest));
+    }
+
 
     private void authenticate(String username, String password) throws Exception {
 
         try {
-
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-
         } catch (DisabledException e) {
-
             throw new Exception("USER_DISABLED", e);
-
         } catch (BadCredentialsException e) {
-
             throw new Exception("INVALID_CREDENTIALS", e);
-
         }
 
     }

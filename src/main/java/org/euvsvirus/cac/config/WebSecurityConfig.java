@@ -23,15 +23,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
     @Autowired
     private CacUserDetailsService cacUserDetailsService;
+
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
+   /* public WebSecurityConfig(PasswordEncoder passwordEncoder, JwtRequestFilter jwtRequestFilter, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint, CacUserDetailsService cacUserDetailsService) {
+        this.passwordEncoder = passwordEncoder;
+        this.jwtRequestFilter = jwtRequestFilter;
+        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
+        this.cacUserDetailsService = cacUserDetailsService;
+    }*/
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -55,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/login", "/user").permitAll()
+                .antMatchers("/api/login", "/api/user").permitAll()
                 .anyRequest().fullyAuthenticated().and().exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and().sessionManagement()
