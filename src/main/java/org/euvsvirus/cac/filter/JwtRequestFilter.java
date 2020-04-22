@@ -1,9 +1,8 @@
 package org.euvsvirus.cac.filter;
 
 import io.jsonwebtoken.ExpiredJwtException;
-import org.euvsvirus.cac.model.JwtToken;
 import org.euvsvirus.cac.service.CacUserDetailsService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.euvsvirus.cac.service.JwtTokenService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,14 +19,13 @@ import java.io.IOException;
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-
-    @Autowired
     private CacUserDetailsService cacUserDetailsService;
 
-    private final JwtToken jwtTokenUtil;
+    private final JwtTokenService jwtTokenService;
 
-    public JwtRequestFilter(JwtToken jwtTokenUtil) {
-        this.jwtTokenUtil = jwtTokenUtil;
+    public JwtRequestFilter(CacUserDetailsService cacUserDetailsService, JwtTokenService jwtTokenService) {
+        this.cacUserDetailsService = cacUserDetailsService;
+        this.jwtTokenService = jwtTokenService;
     }
 
     @Override
@@ -48,7 +46,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
             try {
 
-                username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+                username = jwtTokenService.getUsernameFromToken(jwtToken);
 
             } catch (IllegalArgumentException e) {
 
@@ -72,7 +70,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             UserDetails userDetails = this.cacUserDetailsService.loadUserByUsername(username);
 
 
-            if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
+            if (jwtTokenService.validateToken(jwtToken, userDetails)) {
 
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 
