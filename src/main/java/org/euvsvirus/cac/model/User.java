@@ -3,13 +3,8 @@ package org.euvsvirus.cac.model;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Transient;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
-import java.util.UUID;
+import javax.persistence.*;
+import java.util.*;
 
 /**
  * @author Nils Knudsen
@@ -29,9 +24,9 @@ public class User implements UserDetails {
 
     private String password;
 
-    // FIXME: JPA...
-    @Transient
-    private Map<Skill, Level> skills;
+    // TODO: Load skills lazily in a transactional service?
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private Set<UserSkill> skills;
 
     public User() {
         this.id = UUID.randomUUID().toString();
@@ -78,11 +73,11 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public Map<Skill, Level> getSkills() {
+    public Set<UserSkill> getSkills() {
         return skills;
     }
 
-    public void setSkills(Map<Skill, Level> skills) {
+    public void setSkills(Set<UserSkill> skills) {
         this.skills = skills;
     }
 

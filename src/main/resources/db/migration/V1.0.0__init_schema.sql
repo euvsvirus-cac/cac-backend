@@ -11,15 +11,11 @@ CREATE TABLE skill (
     name varchar(100) not null
 );
 
-CREATE TABLE level (
-    level varchar(100) not null
-);
-
-CREATE TABLE user_to_skill_to_level(
-    user_id varchar(100),
-    skill_id varchar(100),
-    level varchar(100),
+CREATE TABLE user_skill (
+    user_id varchar(100) not null,
+    skill_id varchar(100) not null,
+    level varchar(20),
     FOREIGN KEY (user_id) REFERENCES user(id),
     FOREIGN KEY (skill_id) REFERENCES skill(id),
-    FOREIGN KEY (level) REFERENCES level(level)
+    PRIMARY KEY (user_id, skill_id)
 );
