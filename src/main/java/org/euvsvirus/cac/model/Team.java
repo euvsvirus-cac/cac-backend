@@ -1,11 +1,7 @@
 package org.euvsvirus.cac.model;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import java.io.Serializable;
-import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -15,27 +11,15 @@ import java.util.UUID;
  * @since 23.04.20
  **/
 @Entity
-public class Team implements Serializable {
+public class Team {
 
     @Id
     private String id;
 
     private String name;
 
-
-    @OneToMany(mappedBy = "team", fetch = FetchType.EAGER)
-    private Set<UserTeam> users;
-
     public Team() {
         this.id = UUID.randomUUID().toString();
-    }
-
-    public Set<UserTeam> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<UserTeam> users) {
-        this.users = users;
     }
 
     public String getId() {

@@ -2,11 +2,13 @@ package org.euvsvirus.cac.controller;
 
 import org.euvsvirus.cac.model.User;
 import org.euvsvirus.cac.model.request.CreateUserRequest;
-import org.euvsvirus.cac.model.request.LoginRequest;
+import org.euvsvirus.cac.model.request.UserTeamRequest;
 import org.euvsvirus.cac.model.response.JWTTokenResponse;
 import org.euvsvirus.cac.service.CacUserDetailsService;
 import org.euvsvirus.cac.service.CacUserService;
 import org.euvsvirus.cac.service.JwtTokenService;
+import org.euvsvirus.cac.service.CacUserTeamService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,6 +24,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class UserController {
 
+    //private final CacUserLoginService cacUserLoginService;
+
+    private final CacUserTeamService cacUserTeamService;
+
     private final CacUserDetailsService cacUserDetailsService;
 
     private final AuthenticationManager authenticationManager;
@@ -30,7 +36,11 @@ public class UserController {
 
     private final CacUserService cacUserService;
 
-    public UserController(CacUserDetailsService cacUserDetailsService, AuthenticationManager authenticationManager, JwtTokenService jwtTokenService, CacUserService cacUserService) {
+    public UserController(
+            //CacUserLoginService cacUserLoginService,
+            CacUserTeamService cacUserTeamService, CacUserDetailsService cacUserDetailsService, AuthenticationManager authenticationManager, JwtTokenService jwtTokenService, CacUserService cacUserService) {
+        //this.cacUserLoginService = cacUserLoginService;
+        this.cacUserTeamService = cacUserTeamService;
         this.authenticationManager = authenticationManager;
         this.jwtTokenService = jwtTokenService;
         this.cacUserDetailsService = cacUserDetailsService;
@@ -72,4 +82,8 @@ public class UserController {
 
     }
 
+    @PostMapping(value = "/addUserToTeam", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> addUsertoTeam(@RequestBody UserTeamRequest userTeamRequest) {
+        return new ResponseEntity<>(cacUserTeamService.addUserToTeam(userTeamRequest.getUserId(), userTeamRequest.getTeamId()), HttpStatus.OK);
+    }
 }
