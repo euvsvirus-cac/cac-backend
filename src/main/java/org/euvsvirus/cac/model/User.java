@@ -28,6 +28,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<UserSkill> skills;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Team team;
+
     public User() {
         this.id = UUID.randomUUID().toString();
     }
@@ -62,6 +65,14 @@ public class User implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
     @Override
