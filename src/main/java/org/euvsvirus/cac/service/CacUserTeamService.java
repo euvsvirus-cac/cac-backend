@@ -27,16 +27,16 @@ public class CacUserTeamService {
     public String addUserToTeam(String userId, String teamId) {
 
         Optional<Team> team = teamRepository.findById(teamId);
-        Optional<User> user = userRepository.findById(userId);
-        /*if (team.isPresent()) {
+        if (team.isPresent()) {
 
-team.get().getUsers().add()
+
+            Optional<User> user = userRepository.findById(userId);
 
             if (user.isPresent()) {
-                user.get().setTeams(team.get());
+                user.get().setTeam(team.get());
                 userRepository.save(user.get());
             }
-        }*/
+        }
         return "true";
     }
 }
