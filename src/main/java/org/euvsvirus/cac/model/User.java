@@ -28,11 +28,19 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<UserSkill> skills;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Team team;
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private Set<UserTeam> teams;
 
     public User() {
         this.id = UUID.randomUUID().toString();
+    }
+
+    public Set<UserTeam> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(Set<UserTeam> teams) {
+        this.teams = teams;
     }
 
     public String getId() {
@@ -65,14 +73,6 @@ public class User implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
     }
 
     @Override
