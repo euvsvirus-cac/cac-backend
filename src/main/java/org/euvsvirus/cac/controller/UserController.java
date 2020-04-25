@@ -54,8 +54,8 @@ public class UserController {
         return ResponseEntity.ok(new JWTTokenResponse(token));
     }
 
-    @PostMapping("/user")
-    public ResponseEntity create(@RequestBody CreateUserRequest createUserRequest) {
+    @PostMapping("/register")
+    public ResponseEntity register(@RequestBody CreateUserRequest createUserRequest) {
         return ResponseEntity.ok(cacUserService.createUser(createUserRequest));
     }
 
