@@ -19,6 +19,7 @@
 
         <jwt.version>0.9.1</jwt.version>
 
+        <maven.install.plugin.version>3.0.0-M1</maven.install.plugin.version>
         <dockerfile.maven.version>1.4.13</dockerfile.maven.version>
     </properties>
 
@@ -74,6 +75,16 @@
     </dependencies>
 
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>${maven.install.plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
