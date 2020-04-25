@@ -5,15 +5,14 @@ CREATE TABLE team (
 
 CREATE TABLE user (
     id varchar(100) not null PRIMARY KEY,
-    team varchar(100) not null,
+    teamId varchar(100),
     first_name varchar(100) not null,
-    team varchar(100) not null,
     last_name varchar(100) not null,
     full_name varchar(100) not null,
     display_name varchar(100),
     email varchar(100) not null,
     password varchar(100),
-    FOREIGN KEY (team) REFERENCES team(id)
+    FOREIGN KEY (teamId) REFERENCES team(id)
 );
 
 CREATE TABLE skill (
@@ -30,4 +29,12 @@ CREATE TABLE user_skill (
     FOREIGN KEY (user_id) REFERENCES user(id),
     FOREIGN KEY (skill_id) REFERENCES skill(id),
     PRIMARY KEY (user_id, skill_id)
+);
+
+CREATE TABLE user_team (
+    user_id varchar(100) not null,
+    team_id varchar(100) not null,
+    FOREIGN KEY (user_id) REFERENCES user(id),
+    FOREIGN KEY (team_id) REFERENCES team(id),
+    PRIMARY KEY (user_id, team_id)
 );
