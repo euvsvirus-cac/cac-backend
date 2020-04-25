@@ -30,9 +30,8 @@ public class CacUserService {
         String encodedPassword = new BCryptPasswordEncoder().encode(password);
 
         User user = new User();
-        user.setFirstName(createUserRequest.getFirstName());
-        user.setLastName(createUserRequest.getLastName());
         user.setEmail(email);
+        user.setFullName(createUserRequest.getFullName());
         user.setPassword(encodedPassword);
         userRepository.save(user);
 

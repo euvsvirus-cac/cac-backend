@@ -1,8 +1,8 @@
 CREATE TABLE user (
     id varchar(100) not null PRIMARY KEY,
-    first_name varchar(100) not null,
-    last_name varchar(100) not null,
-    email varchar(100) not null,
+    full_name varchar(100) not null,
+    display_name varchar(100),
+    email varchar(100) not null unique,
     password varchar(100)
 );
 
