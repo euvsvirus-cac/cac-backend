@@ -31,4 +31,27 @@ public class UserTeam implements Serializable {
     @JsonUnwrapped
     private Team team;
 
+    public UserTeamKey getId() {
+        return id;
+    }
+
+    public void setId(UserTeamKey id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
 }
