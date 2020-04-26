@@ -1,7 +1,9 @@
 package org.euvsvirus.cac.controller.api;
 
+import org.euvsvirus.cac.model.Skill;
 import org.euvsvirus.cac.model.User;
 import org.euvsvirus.cac.model.request.UserTeamRequest;
+import org.euvsvirus.cac.model.response.MyTeamResponse;
 import org.euvsvirus.cac.service.CacUserService;
 import org.euvsvirus.cac.service.CacUserTeamService;
 import org.springframework.http.HttpStatus;
@@ -28,19 +30,14 @@ public class TeamController {
         this.cacUserService = cacUserService;
     }
 
-    /**
-     * TODO: This will be the entry point for the 'My Team' card
-     * with filter options etc.
-     */
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> myTeam() {
-        final String teamId = cacUserService.getCurrentUser().getTeamId();
+    public MyTeamResponse getMyTeam() {
+        return cacUserTeamService.getMyTeam();
+    }
 
-        if (teamId == null) {
-            return ResponseEntity.noContent().build();
-        }
-
-        return ResponseEntity.ok(cacUserTeamService.findUsersByTeamId(teamId));
+    @GetMapping(value = "/skills", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Set<Skill> getTeamSkills(@RequestParam(value = "filter", required = false) String skillFilter) {
+        return cacUserTeamService.getTeamSkills(skillFilter);
     }
 
     /**

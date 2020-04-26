@@ -6,9 +6,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Set;
+
 public interface SkillRepository extends CrudRepository<Skill, String> {
 
     Skill findByNameAndTeamId(String name, String teamId);
+
+    Set<Skill> findAllByTeamId(String teamId);
+
+    Set<Skill> findAllByTeamIdAndNameStartsWith(String teamId, String nameStartsWith);
 
     @Modifying(flushAutomatically = true)
     @Query(

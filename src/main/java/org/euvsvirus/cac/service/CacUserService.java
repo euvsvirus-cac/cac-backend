@@ -43,11 +43,12 @@ public class CacUserService {
         return true;
     }
 
-    public User getCurrentUser() {
+    public static User getCurrentUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof User) {
             return (User) principal;
         }
+        // TODO: Throw exception?
         return null;
     }
 
