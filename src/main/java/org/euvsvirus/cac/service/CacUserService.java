@@ -7,6 +7,7 @@ import org.euvsvirus.cac.repository.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Nils Knudsen
@@ -45,6 +46,12 @@ public class CacUserService {
             return (User) principal;
         }
         return null;
+    }
+
+    @Transactional
+    public void updateStatus(boolean available) {
+        final String id = getCurrentUser().getId();
+        userRepository.updateStatus(id, available);
     }
 
 }

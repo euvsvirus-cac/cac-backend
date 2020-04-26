@@ -1,6 +1,7 @@
 package org.euvsvirus.cac.controller;
 
 import org.euvsvirus.cac.model.User;
+import org.euvsvirus.cac.model.request.UpdateStatusRequest;
 import org.euvsvirus.cac.service.CacUserService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,11 @@ public class UserController {
     @GetMapping(value = "/me", produces = MediaType.APPLICATION_JSON_VALUE)
     public User me() {
         return cacUserService.getCurrentUser();
+    }
+
+    @PutMapping(value = "/me/status")
+    public void updateStatus(@RequestBody UpdateStatusRequest request) {
+        cacUserService.updateStatus(request.isAvailable());
     }
 
 }

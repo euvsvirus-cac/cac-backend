@@ -2,6 +2,8 @@ CREATE TABLE user (
     id varchar(100) not null PRIMARY KEY,
     full_name varchar(100) not null,
     display_name varchar(100),
+    title varchar(100),
+    available bit default 0,
     email varchar(100) not null unique,
     password varchar(100)
 );

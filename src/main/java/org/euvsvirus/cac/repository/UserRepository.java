@@ -1,12 +1,19 @@
 package org.euvsvirus.cac.repository;
 
 import org.euvsvirus.cac.model.User;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 public interface UserRepository extends CrudRepository<User, String> {
 
     User findByEmail(String email);
 
-    Boolean existsByEmail(String username);
+    boolean existsByEmail(String username);
+
+    @Modifying(flushAutomatically = true)
+    @Query("update User u set u.available = :available where u.id = :userId")
+    void updateStatus(@Param("userId") String userId, @Param("available") boolean available);
 
 }
