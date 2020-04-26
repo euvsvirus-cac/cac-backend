@@ -4,6 +4,7 @@ import org.euvsvirus.cac.error.exception.ValidationException;
 import org.euvsvirus.cac.model.User;
 import org.euvsvirus.cac.model.request.CreateUserRequest;
 import org.euvsvirus.cac.repository.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -37,4 +38,13 @@ public class CacUserService {
 
         return true;
     }
+
+    public User getCurrentUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof User) {
+            return (User) principal;
+        }
+        return null;
+    }
+
 }
