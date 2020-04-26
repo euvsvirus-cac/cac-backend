@@ -13,6 +13,7 @@ CREATE TABLE user (
     email varchar(100) not null unique,
     password varchar(100),
     team_id varchar(100),
+    slack_uid varchar(20),
     FOREIGN KEY (team_id) REFERENCES team(id)
 );
 
