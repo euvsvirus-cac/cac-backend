@@ -1,5 +1,7 @@
 package org.euvsvirus.cac.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
@@ -17,6 +19,7 @@ public class Skill implements Serializable {
 
     private String name;
 
+    @JsonIgnore
     private String teamId;
 
     public Skill() {
