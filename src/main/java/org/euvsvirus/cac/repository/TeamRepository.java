@@ -8,4 +8,7 @@ import org.springframework.data.repository.CrudRepository;
  * @since 24.04.20
  **/
 public interface TeamRepository extends CrudRepository<Team, String> {
+
+    Team findByInvitationId(String invitationCode);
+
 }

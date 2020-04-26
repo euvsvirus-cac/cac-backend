@@ -6,11 +6,21 @@ package org.euvsvirus.cac.model.request;
  **/
 public class CreateUserRequest {
 
+    private String invitationCode;
+
     private String email;
 
     private String fullName;
 
     private String password;
+
+    public String getInvitationCode() {
+        return invitationCode;
+    }
+
+    public void setInvitationCode(String invitationCode) {
+        this.invitationCode = invitationCode;
+    }
 
     public String getEmail() {
         return email;
