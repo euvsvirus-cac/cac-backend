@@ -31,8 +31,13 @@ public class TeamController {
     }
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public MyTeamResponse getMyTeam() {
-        return cacUserTeamService.getMyTeam();
+    public ResponseEntity<Object> getMyTeam() {
+        MyTeamResponse myTeam = cacUserTeamService.getMyTeam();
+        if (myTeam == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(myTeam);
+        }
     }
 
     @GetMapping(value = "/skills", produces = MediaType.APPLICATION_JSON_VALUE)

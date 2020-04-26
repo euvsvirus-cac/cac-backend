@@ -56,6 +56,10 @@ public class CacUserTeamService {
     public MyTeamResponse getMyTeam() {
         final String teamId = CacUserService.getCurrentUser().getTeamId();
 
+        if (teamId == null) {
+            return null;
+        }
+
         final Team team = teamRepository.findById(teamId).get();
         final Set<User> users = userRepository.findAllByTeamId(teamId);
 
