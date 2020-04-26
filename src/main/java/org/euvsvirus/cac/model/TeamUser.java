@@ -2,7 +2,6 @@ package org.euvsvirus.cac.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,8 +12,7 @@ import java.io.Serializable;
  **/
 
 @Entity
-@JsonIgnoreProperties({"users", "user"})
-public class UserTeam implements Serializable {
+public class TeamUser implements Serializable {
 
     @EmbeddedId
     @JsonIgnore
@@ -23,12 +21,13 @@ public class UserTeam implements Serializable {
     @ManyToOne
     @MapsId("user_id")
     @JoinColumn(name = "user_id")
+    @JsonIgnoreProperties({"users", "teams"})
     private User user;
 
     @ManyToOne
     @MapsId("team_id")
     @JoinColumn(name = "team_id")
-    @JsonUnwrapped
+    @JsonIgnoreProperties({"users", "teams"})
     private Team team;
 
     public UserTeamKey getId() {

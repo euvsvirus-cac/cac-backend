@@ -38,3 +38,11 @@ CREATE TABLE user_team (
     FOREIGN KEY (team_id) REFERENCES team(id),
     PRIMARY KEY (user_id, team_id)
 );
+
+CREATE TABLE team_user (
+   user_id varchar(100) not null,
+   team_id varchar(100) not null,
+   FOREIGN KEY (user_id) REFERENCES user(id),
+   FOREIGN KEY (team_id) REFERENCES team(id),
+   PRIMARY KEY (user_id, team_id)
+);

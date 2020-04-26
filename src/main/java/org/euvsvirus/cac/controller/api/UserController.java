@@ -28,4 +28,5 @@ public class UserController {
     public ResponseEntity<Set<UserTeam>> getTeamsForUser(@RequestParam String userId) {
         return new ResponseEntity<>(cacUserTeamService.findTeamsForUser(userId), HttpStatus.OK);
     }
+
 }
