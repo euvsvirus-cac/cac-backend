@@ -3,6 +3,7 @@ package org.euvsvirus.cac.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.util.UUID;
 
 /**
  * @author Nils Knudsen
@@ -15,6 +16,15 @@ public class Skill implements Serializable {
     private String id;
 
     private String name;
+
+    public Skill() {
+        // required default constructor
+    }
+
+    public Skill(String name) {
+        this.id = UUID.randomUUID().toString();
+        this.name = name;
+    }
 
     public String getId() {
         return id;
