@@ -1,6 +1,7 @@
 package org.euvsvirus.cac.controller;
 
 import org.euvsvirus.cac.model.User;
+import org.euvsvirus.cac.model.request.AddSkillRequest;
 import org.euvsvirus.cac.model.request.UpdateStatusRequest;
 import org.euvsvirus.cac.service.CacUserService;
 import org.springframework.http.MediaType;
@@ -25,6 +26,11 @@ public class UserController {
     @PutMapping(value = "/me/status")
     public void updateStatus(@RequestBody UpdateStatusRequest request) {
         cacUserService.updateStatus(request.isAvailable());
+    }
+
+    @PostMapping(value = "/me/skills")
+    public void addSkill(@RequestBody AddSkillRequest request) {
+        cacUserService.addSkill(request.getName(), request.getLevel());
     }
 
 }
