@@ -1,18 +1,19 @@
 CREATE TABLE team (
   id varchar(100) not null PRIMARY KEY,
-  name varchar(100) not null
+  name varchar(100) not null,
+  invitation_id varchar(100)
 );
 
 CREATE TABLE user (
     id varchar(100) not null PRIMARY KEY,
-    teamId varchar(100),
     full_name varchar(100) not null,
     display_name varchar(100),
     title varchar(100),
     available bit default 0,
     email varchar(100) not null unique,
     password varchar(100),
-    FOREIGN KEY (teamId) REFERENCES team(id)
+    team_id varchar(100),
+    FOREIGN KEY (team_id) REFERENCES team(id)
 );
 
 CREATE TABLE skill (
@@ -27,20 +28,4 @@ CREATE TABLE user_skill (
     FOREIGN KEY (user_id) REFERENCES user(id),
     FOREIGN KEY (skill_id) REFERENCES skill(id),
     PRIMARY KEY (user_id, skill_id)
-);
-
-CREATE TABLE user_team (
-    user_id varchar(100) not null,
-    team_id varchar(100) not null,
-    FOREIGN KEY (user_id) REFERENCES user(id),
-    FOREIGN KEY (team_id) REFERENCES team(id),
-    PRIMARY KEY (user_id, team_id)
-);
-
-CREATE TABLE team_user (
-   user_id varchar(100) not null,
-   team_id varchar(100) not null,
-   FOREIGN KEY (user_id) REFERENCES user(id),
-   FOREIGN KEY (team_id) REFERENCES team(id),
-   PRIMARY KEY (user_id, team_id)
 );

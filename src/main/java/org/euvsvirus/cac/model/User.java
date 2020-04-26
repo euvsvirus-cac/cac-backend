@@ -29,24 +29,16 @@ public class User implements UserDetails, Serializable {
 
     private String password;
 
+    private String teamId;
+
     // TODO: Load skills lazily in a transactional service?
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<UserSkill> skills;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private Set<UserTeam> teams;
-
     public User() {
-            this.id = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID().toString();
     }
 
-    public Set<UserTeam> getTeams() {
-        return teams;
-    }
-
-    public void setTeams(Set<UserTeam> teams) {
-        this.teams = teams;
-    }
     public String getId() {
         return id;
     }
@@ -102,6 +94,14 @@ public class User implements UserDetails, Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(String teamId) {
+        this.teamId = teamId;
     }
 
     public Set<UserSkill> getSkills() {
