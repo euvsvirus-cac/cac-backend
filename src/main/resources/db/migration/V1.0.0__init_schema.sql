@@ -8,7 +8,9 @@ CREATE TABLE user (
     teamId varchar(100),
     full_name varchar(100) not null,
     display_name varchar(100),
-    email varchar(100) unique not null,
+    title varchar(100),
+    available bit default 0,
+    email varchar(100) not null unique,
     password varchar(100),
     FOREIGN KEY (teamId) REFERENCES team(id)
 );

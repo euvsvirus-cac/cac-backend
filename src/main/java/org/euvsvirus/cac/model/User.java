@@ -21,6 +21,10 @@ public class User implements UserDetails, Serializable {
 
     private String displayName;
 
+    private String title;
+
+    private boolean available;
+
     private String email;
 
     private String password;
@@ -65,6 +69,22 @@ public class User implements UserDetails, Serializable {
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 
     public String getEmail() {
