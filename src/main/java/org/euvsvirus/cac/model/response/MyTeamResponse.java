@@ -6,7 +6,7 @@ import org.euvsvirus.cac.model.Skill;
 import org.euvsvirus.cac.model.Team;
 import org.euvsvirus.cac.model.User;
 
-import java.util.Set;
+import java.util.List;
 
 @JsonIgnoreProperties({"teamId"})
 public class MyTeamResponse {
@@ -14,9 +14,9 @@ public class MyTeamResponse {
     @JsonUnwrapped
     private Team team;
 
-    private Set<User> users;
+    private List<User> users;
 
-    private Set<Skill> skills;
+    private List<Skill> skills;
 
     public Team getTeam() {
         return team;
@@ -26,19 +26,19 @@ public class MyTeamResponse {
         this.team = team;
     }
 
-    public Set<User> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(Set<User> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 
-    public Set<Skill> getSkills() {
+    public List<Skill> getSkills() {
         return skills;
     }
 
-    public void setSkills(Set<Skill> skills) {
+    public void setSkills(List<Skill> skills) {
         this.skills = skills;
     }
 }

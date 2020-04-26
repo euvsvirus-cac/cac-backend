@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-import java.util.Set;
+import java.util.List;
 
 public interface UserRepository extends CrudRepository<User, String> {
 
@@ -22,5 +22,5 @@ public interface UserRepository extends CrudRepository<User, String> {
     @Query("update User u set u.teamId = :teamId where u.id = :userId")
     void addUserToTeam(@Param("userId") String userId, @Param("teamId") String teamId);
 
-    Set<User> findAllByTeamId(@Param("teamId") String teamId);
+    List<User> findAllByTeamIdOrderById(@Param("teamId") String teamId);
 }

@@ -37,7 +37,7 @@ public class User implements UserDetails, Serializable {
 
     // TODO: Load skills lazily in a transactional service?
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private Set<UserSkill> skills;
+    private List<UserSkill> skills;
 
     public User() {
         this.id = UUID.randomUUID().toString();
@@ -116,11 +116,11 @@ public class User implements UserDetails, Serializable {
         this.slackUid = slackUid;
     }
 
-    public Set<UserSkill> getSkills() {
+    public List<UserSkill> getSkills() {
         return skills;
     }
 
-    public void setSkills(Set<UserSkill> skills) {
+    public void setSkills(List<UserSkill> skills) {
         this.skills = skills;
     }
 

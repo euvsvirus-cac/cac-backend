@@ -11,7 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author Nils Knudsen
@@ -31,8 +31,8 @@ public class TeamController {
     }
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> getMyTeam() {
-        MyTeamResponse myTeam = cacUserTeamService.getMyTeam();
+    public ResponseEntity<Object> getMyTeam(@RequestParam(value = "filter", required = false) String skillFilter) {
+        MyTeamResponse myTeam = cacUserTeamService.getMyTeam(skillFilter);
         if (myTeam == null) {
             return ResponseEntity.notFound().build();
         } else {
@@ -41,7 +41,7 @@ public class TeamController {
     }
 
     @GetMapping(value = "/skills", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Set<Skill> getTeamSkills(@RequestParam(value = "filter", required = false) String skillFilter) {
+    public List<Skill> getTeamSkills(@RequestParam(value = "filter", required = false) String skillFilter) {
         return cacUserTeamService.getTeamSkills(skillFilter);
     }
 
@@ -49,7 +49,7 @@ public class TeamController {
      * TODO: Only allow access to the own team.
      */
     @GetMapping(value = "/members", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Set<User>> getUsersForTeam(@RequestParam String teamId) {
+    public ResponseEntity<List<User>> getUsersForTeam(@RequestParam String teamId) {
         return new ResponseEntity<>(cacUserTeamService.findUsersByTeamId(teamId), HttpStatus.OK);
     }
 

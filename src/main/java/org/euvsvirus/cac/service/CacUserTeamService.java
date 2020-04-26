@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.util.Set;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Nils Knudsen
@@ -31,29 +32,29 @@ public class CacUserTeamService {
         this.skillRepository = skillRepository;
     }
 
-    public Set<User> findUsersByTeamId(String teamId) {
-        return userRepository.findAllByTeamId(teamId);
+    public List<User> findUsersByTeamId(String teamId) {
+        return userRepository.findAllByTeamIdOrderById(teamId);
     }
 
-    public Set<Skill> getTeamSkills() {
+    public List<Skill> getTeamSkills() {
         return getTeamSkills(null);
     }
 
-    public Set<Skill> getTeamSkills(@Nullable String filter) {
+    public List<Skill> getTeamSkills(@Nullable String filter) {
         final String teamId = CacUserService.getCurrentUser().getTeamId();
 
-        Set<Skill> skills;
+        List<Skill> skills;
         if (StringUtils.isEmpty(filter)) {
-            skills = skillRepository.findAllByTeamId(teamId);
+            skills = skillRepository.findAllByTeamIdOrderById(teamId);
         } else {
-            skills = skillRepository.findAllByTeamIdAndNameStartsWith(teamId, filter);
+            skills = skillRepository.findAllByTeamIdAndNameStartsWithOrderByNameAsc(teamId, filter);
         }
 
         return skills;
     }
 
     @Transactional
-    public MyTeamResponse getMyTeam() {
+    public MyTeamResponse getMyTeam(@Nullable String filter) {
         final String teamId = CacUserService.getCurrentUser().getTeamId();
 
         if (teamId == null) {
@@ -61,11 +62,19 @@ public class CacUserTeamService {
         }
 
         final Team team = teamRepository.findById(teamId).get();
-        final Set<User> users = userRepository.findAllByTeamId(teamId);
+        List<User> users = userRepository.findAllByTeamIdOrderById(teamId);
+
+        // Filter users by skill
+        if (!StringUtils.isEmpty(filter)) {
+            users = users.stream()
+                    .filter(u -> u.getSkills().stream().anyMatch(s -> s.getSkill().getName().startsWith(filter)))
+                    .collect(Collectors.toList());
+        }
 
         MyTeamResponse myTeamResponse = new MyTeamResponse();
         myTeamResponse.setTeam(team);
         myTeamResponse.setUsers(users);
+        // Unfiltered skills in the skill list
         myTeamResponse.setSkills(getTeamSkills());
         return myTeamResponse;
     }
