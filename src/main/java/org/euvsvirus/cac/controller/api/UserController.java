@@ -1,4 +1,4 @@
-package org.euvsvirus.cac.controller;
+package org.euvsvirus.cac.controller.api;
 
 import org.euvsvirus.cac.model.User;
 import org.euvsvirus.cac.model.request.AddSkillRequest;
@@ -7,9 +7,13 @@ import org.euvsvirus.cac.service.CacUserService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * @author Nils Knudsen
+ * @since 25.04.20
+ **/
 @CrossOrigin
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 public class UserController {
 
     private final CacUserService cacUserService;

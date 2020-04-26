@@ -52,6 +52,11 @@ public class CacUserService {
     }
 
     @Transactional
+    public void addUserToTeam(String userId, String teamId) {
+        userRepository.addUserToTeam(userId, teamId);
+    }
+
+    @Transactional
     public void updateStatus(boolean available) {
         final String id = getCurrentUser().getId();
         userRepository.updateStatus(id, available);
