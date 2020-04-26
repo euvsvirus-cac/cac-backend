@@ -64,16 +64,18 @@ public class CacUserService {
 
     @Transactional
     public void addSkill(String skillName, Level level) {
-        final String userId = getCurrentUser().getId();
+        final User user = getCurrentUser();
+        final String userId = user.getId();
+        final String teamId = user.getTeamId();
 
         skillName = skillName.trim().toLowerCase().replace(' ', '-');
         if (skillName.isBlank()) {
             throw new IllegalArgumentException("Skill name is required.");
         }
 
-        Skill skill = skillRepository.findByName(skillName);
+        Skill skill = skillRepository.findByNameAndTeamId(skillName, teamId);
         if (skill == null) {
-            Skill newSkill = new Skill(skillName);
+            Skill newSkill = new Skill(skillName, teamId);
             skill = skillRepository.save(newSkill);
         }
 
