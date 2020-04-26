@@ -61,7 +61,7 @@ public class CacUserService {
     public void addSkill(String skillName, Level level) {
         final String userId = getCurrentUser().getId();
 
-        skillName = skillName.trim();
+        skillName = skillName.trim().toLowerCase().replace(' ', '-');
         if (skillName.isBlank()) {
             throw new IllegalArgumentException("Skill name is required.");
         }
