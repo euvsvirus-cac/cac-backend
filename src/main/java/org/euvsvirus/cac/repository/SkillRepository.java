@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface SkillRepository extends CrudRepository<Skill, String> {
 
-    Skill findByName(String name);
+    Skill findByNameAndTeamId(String name, String teamId);
 
     @Modifying(flushAutomatically = true)
     @Query(

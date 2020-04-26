@@ -18,7 +18,10 @@ CREATE TABLE user (
 
 CREATE TABLE skill (
     id varchar(100) not null PRIMARY KEY,
-    name varchar(100) not null
+    name varchar(100) not null,
+    team_id varchar(100) not null,
+    FOREIGN KEY (team_id) REFERENCES team(id),
+    CONSTRAINT unique_name_for_team UNIQUE(name, team_id)
 );
 
 CREATE TABLE user_skill (

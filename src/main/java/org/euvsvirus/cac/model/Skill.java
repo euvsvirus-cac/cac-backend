@@ -17,13 +17,16 @@ public class Skill implements Serializable {
 
     private String name;
 
+    private String teamId;
+
     public Skill() {
         // required default constructor
     }
 
-    public Skill(String name) {
+    public Skill(String name, String teamId) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
+        this.teamId = teamId;
     }
 
     public String getId() {
@@ -42,4 +45,11 @@ public class Skill implements Serializable {
         this.name = name;
     }
 
+    public String getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(String teamId) {
+        this.teamId = teamId;
+    }
 }
