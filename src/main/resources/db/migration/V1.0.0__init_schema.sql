@@ -6,8 +6,8 @@ CREATE TABLE team (
 CREATE TABLE user (
     id varchar(100) not null PRIMARY KEY,
     teamId varchar(100),
-    first_name varchar(100) not null,
-    last_name varchar(100) not null,
+    full_name varchar(100) not null,
+    display_name varchar(100),
     email varchar(100) unique not null,
     password varchar(100),
     FOREIGN KEY (teamId) REFERENCES team(id)

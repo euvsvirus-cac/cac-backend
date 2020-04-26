@@ -17,9 +17,9 @@ public class User implements UserDetails, Serializable {
     @Id
     private String id;
 
-    private String firstName;
+    private String fullName;
 
-    private String lastName;
+    private String displayName;
 
     private String email;
 
@@ -51,20 +51,20 @@ public class User implements UserDetails, Serializable {
         this.id = uid;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public String getEmail() {
