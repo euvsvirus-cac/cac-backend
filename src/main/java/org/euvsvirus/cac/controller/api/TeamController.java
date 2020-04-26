@@ -1,6 +1,6 @@
 package org.euvsvirus.cac.controller.api;
 
-import org.euvsvirus.cac.model.UserTeam;
+import org.euvsvirus.cac.model.TeamUser;
 import org.euvsvirus.cac.model.request.UserTeamRequest;
 import org.euvsvirus.cac.service.CacUserTeamService;
 import org.springframework.http.HttpStatus;
@@ -26,7 +26,7 @@ public class TeamController {
     }
 
     @GetMapping(value = "/members", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Set<UserTeam>> getUsersForTeam(@RequestParam String teamId) {
+    public ResponseEntity<Set<TeamUser>> getUsersForTeam(@RequestParam String teamId) {
         return new ResponseEntity<>(cacUserTeamService.findUsersByTeamId(teamId), HttpStatus.OK);
     }
 

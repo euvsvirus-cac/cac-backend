@@ -23,18 +23,18 @@ public class Team implements Serializable {
     private String name;
 
     @OneToMany(mappedBy = "team", fetch = FetchType.EAGER)
-    private Set<UserTeam> users;
+    private Set<TeamUser> users;
 
 
     public Team() {
         this.id = UUID.randomUUID().toString();
     }
 
-    public Set<UserTeam> getUsers() {
+    public Set<TeamUser> getUsers() {
         return users;
     }
 
-    public void setUsers(Set<UserTeam> users) {
+    public void setUsers(Set<TeamUser> users) {
         this.users = users;
     }
 
