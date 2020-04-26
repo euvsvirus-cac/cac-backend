@@ -4,6 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -11,7 +12,7 @@ import java.util.*;
  * @since 20.04.20
  **/
 @Entity
-public class User implements UserDetails {
+public class User implements UserDetails, Serializable {
 
     @Id
     private String id;
@@ -28,12 +29,14 @@ public class User implements UserDetails {
 
     private String password;
 
+    private String teamId;
+
     // TODO: Load skills lazily in a transactional service?
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<UserSkill> skills;
 
     public User() {
-            this.id = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getId() {
@@ -91,6 +94,14 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(String teamId) {
+        this.teamId = teamId;
     }
 
     public Set<UserSkill> getSkills() {

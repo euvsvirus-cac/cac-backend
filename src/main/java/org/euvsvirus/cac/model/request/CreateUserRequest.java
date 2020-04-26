@@ -1,8 +1,6 @@
 package org.euvsvirus.cac.model.request;
 
 /**
- * TODO: Ändere mich in eine Beschreibung
- *
  * @author Nils Knudsen
  * @since 22.04.20
  **/
