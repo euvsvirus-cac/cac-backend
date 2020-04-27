@@ -1,5 +1,6 @@
 package org.euvsvirus.cac.service;
 
+import org.euvsvirus.cac.error.exception.ValidationException;
 import org.euvsvirus.cac.model.*;
 import org.euvsvirus.cac.model.response.MyTeamResponse;
 import org.euvsvirus.cac.repository.SkillRepository;
@@ -26,14 +27,21 @@ public class CacUserTeamService {
 
     private final SkillRepository skillRepository;
 
-    public CacUserTeamService(UserRepository userRepository, TeamRepository teamRepository, SkillRepository skillRepository) {
+    private final CacUserService cacUserService;
+
+    public CacUserTeamService(UserRepository userRepository, TeamRepository teamRepository, SkillRepository skillRepository, CacUserService cacUserService) {
         this.userRepository = userRepository;
         this.teamRepository = teamRepository;
         this.skillRepository = skillRepository;
+        this.cacUserService = cacUserService;
     }
 
-    public List<User> findUsersByTeamId(String teamId) {
-        return userRepository.findAllByTeamIdOrderById(teamId);
+    public List<User> findUsersByTeamId(User currentUser, String teamId) {
+        if(currentUser.getTeamId() == teamId) {
+            return userRepository.findAllByTeamIdOrderById(teamId);
+        } else {
+            throw new ValidationException("You're not a member of the team you requested for");
+        }
     }
 
     public List<Skill> getTeamSkills() {

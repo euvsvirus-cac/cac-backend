@@ -45,12 +45,10 @@ public class TeamController {
         return cacUserTeamService.getTeamSkills(skillFilter);
     }
 
-    /**
-     * TODO: Only allow access to the own team.
-     */
     @GetMapping(value = "/members", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<User>> getUsersForTeam(@RequestParam String teamId) {
-        return new ResponseEntity<>(cacUserTeamService.findUsersByTeamId(teamId), HttpStatus.OK);
+        User currentUser = CacUserService.getCurrentUser();
+        return new ResponseEntity<>(cacUserTeamService.findUsersByTeamId(currentUser, teamId), HttpStatus.OK);
     }
 
     /**
