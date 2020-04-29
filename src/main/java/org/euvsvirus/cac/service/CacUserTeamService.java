@@ -1,6 +1,9 @@
 package org.euvsvirus.cac.service;
 
-import org.euvsvirus.cac.model.*;
+import org.euvsvirus.cac.error.exception.ValidationException;
+import org.euvsvirus.cac.model.Skill;
+import org.euvsvirus.cac.model.Team;
+import org.euvsvirus.cac.model.User;
 import org.euvsvirus.cac.model.response.MyTeamResponse;
 import org.euvsvirus.cac.repository.SkillRepository;
 import org.euvsvirus.cac.repository.TeamRepository;
@@ -11,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -26,6 +30,7 @@ public class CacUserTeamService {
 
     private final SkillRepository skillRepository;
 
+
     public CacUserTeamService(UserRepository userRepository, TeamRepository teamRepository, SkillRepository skillRepository) {
         this.userRepository = userRepository;
         this.teamRepository = teamRepository;
@@ -33,7 +38,12 @@ public class CacUserTeamService {
     }
 
     public List<User> findUsersByTeamId(String teamId) {
-        return userRepository.findAllByTeamIdOrderById(teamId);
+        User currentUser = CacUserService.getCurrentUser();
+        if (currentUser.getTeamId().equals(teamId)) {
+            return userRepository.findAllByTeamIdOrderById(teamId);
+        } else {
+            throw new ValidationException("You're not a member of the team you requested for");
+        }
     }
 
     public List<Skill> getTeamSkills() {
@@ -56,12 +66,18 @@ public class CacUserTeamService {
     @Transactional
     public MyTeamResponse getMyTeam(@Nullable String filter) {
         final String teamId = CacUserService.getCurrentUser().getTeamId();
+        Team team = null;
 
         if (teamId == null) {
             return null;
         }
 
-        final Team team = teamRepository.findById(teamId).get();
+        Optional<Team> byId = teamRepository.findById(teamId);
+
+        if (byId.isPresent()) {
+            team = byId.get();
+        }
+
         List<User> users = userRepository.findAllByTeamIdOrderById(teamId);
 
         // Filter users by skill
