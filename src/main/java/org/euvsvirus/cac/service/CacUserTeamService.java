@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -27,13 +28,11 @@ public class CacUserTeamService {
 
     private final SkillRepository skillRepository;
 
-    private final CacUserService cacUserService;
 
-    public CacUserTeamService(UserRepository userRepository, TeamRepository teamRepository, SkillRepository skillRepository, CacUserService cacUserService) {
+    public CacUserTeamService(UserRepository userRepository, TeamRepository teamRepository, SkillRepository skillRepository) {
         this.userRepository = userRepository;
         this.teamRepository = teamRepository;
         this.skillRepository = skillRepository;
-        this.cacUserService = cacUserService;
     }
 
     public List<User> findUsersByTeamId(User currentUser, String teamId) {
@@ -64,12 +63,18 @@ public class CacUserTeamService {
     @Transactional
     public MyTeamResponse getMyTeam(@Nullable String filter) {
         final String teamId = CacUserService.getCurrentUser().getTeamId();
+        Team team = null;
 
         if (teamId == null) {
             return null;
         }
 
-        final Team team = teamRepository.findById(teamId).get();
+        Optional<Team> byId = teamRepository.findById(teamId);
+
+        if(byId.isPresent()) {
+             team = byId.get();
+        }
+
         List<User> users = userRepository.findAllByTeamIdOrderById(teamId);
 
         // Filter users by skill
