@@ -47,8 +47,7 @@ public class TeamController {
 
     @GetMapping(value = "/members", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<User>> getUsersForTeam(@RequestParam String teamId) {
-        User currentUser = CacUserService.getCurrentUser();
-        return new ResponseEntity<>(cacUserTeamService.findUsersByTeamId(currentUser, teamId), HttpStatus.OK);
+        return new ResponseEntity<>(cacUserTeamService.findUsersByTeamId(teamId), HttpStatus.OK);
     }
 
     /**

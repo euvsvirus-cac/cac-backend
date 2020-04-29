@@ -37,7 +37,8 @@ public class CacUserTeamService {
         this.skillRepository = skillRepository;
     }
 
-    public List<User> findUsersByTeamId(User currentUser, String teamId) {
+    public List<User> findUsersByTeamId(String teamId) {
+        User currentUser = CacUserService.getCurrentUser();
         if (currentUser.getTeamId().equals(teamId)) {
             return userRepository.findAllByTeamIdOrderById(teamId);
         } else {
