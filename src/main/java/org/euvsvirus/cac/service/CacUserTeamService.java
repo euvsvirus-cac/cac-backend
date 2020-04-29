@@ -1,7 +1,9 @@
 package org.euvsvirus.cac.service;
 
 import org.euvsvirus.cac.error.exception.ValidationException;
-import org.euvsvirus.cac.model.*;
+import org.euvsvirus.cac.model.Skill;
+import org.euvsvirus.cac.model.Team;
+import org.euvsvirus.cac.model.User;
 import org.euvsvirus.cac.model.response.MyTeamResponse;
 import org.euvsvirus.cac.repository.SkillRepository;
 import org.euvsvirus.cac.repository.TeamRepository;
@@ -36,7 +38,7 @@ public class CacUserTeamService {
     }
 
     public List<User> findUsersByTeamId(User currentUser, String teamId) {
-        if(currentUser.getTeamId().equals(teamId)) {
+        if (currentUser.getTeamId().equals(teamId)) {
             return userRepository.findAllByTeamIdOrderById(teamId);
         } else {
             throw new ValidationException("You're not a member of the team you requested for");
@@ -71,8 +73,8 @@ public class CacUserTeamService {
 
         Optional<Team> byId = teamRepository.findById(teamId);
 
-        if(byId.isPresent()) {
-             team = byId.get();
+        if (byId.isPresent()) {
+            team = byId.get();
         }
 
         List<User> users = userRepository.findAllByTeamIdOrderById(teamId);
