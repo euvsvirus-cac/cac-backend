@@ -37,7 +37,7 @@ public class CacUserTeamService {
     }
 
     public List<User> findUsersByTeamId(User currentUser, String teamId) {
-        if(currentUser.getTeamId() == teamId) {
+        if(currentUser.getTeamId().equals(teamId)) {
             return userRepository.findAllByTeamIdOrderById(teamId);
         } else {
             throw new ValidationException("You're not a member of the team you requested for");
